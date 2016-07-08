@@ -1,11 +1,18 @@
 Package: trbRticle
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Article Format for the Journal of the Transportation Research Board
 Version: 0.1.0
-Author: Who wrote it
+Authors@R: c(
+  person("Daniel", "Emaasit", role = c("aut", "cre"), email = "daniel.emaasit@gmail.com"),
+  person("Daniel", "Emaasit", role = c("aut", "cph"), email = "daniel.emaasit@gmail.com")
+  )
 Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Description: A suite of custom R Markdown formats and templates for
+  authoring journal articles and conference submissions for TRB.
+License: GPL-3
+Imports: utils, rmarkdown, knitr, yaml
+SystemRequirements: GNU make
+RoxygenNote: 5.0.1
+Suggests: testthat
 Encoding: UTF-8
 LazyData: true

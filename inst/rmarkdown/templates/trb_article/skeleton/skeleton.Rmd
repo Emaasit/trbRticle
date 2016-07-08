@@ -1,0 +1,174 @@
+---
+title: Short Paper
+author:
+  - name: Alice Anonymous
+    email: alice@example.com
+    affiliation: Some Institute of Technology
+    footnote: Corresponding Author
+  - name: Bob Security
+    email: bob@example.com
+    affiliation: Another University
+address:
+  - code: Some Institute of Technology
+    address: Department, Street, City, State, Zip
+  - code: Another University
+    address: Department, Street, City, State, Zip
+abstract: |
+  The Transportation Research Board has unique and seemingly arbitrary requirements for manuscripts submitted for review. These requirements make it difficult to write the manuscripts quickly, and no existing \LaTeX\ style comes close to fooling the guidelines. This represents an initial effort at creating a template to meet the requirements of TRB authors using \LaTeX, Sweave, or other literate programming software.
+
+bibliography: TRBLaTeX.bib
+output: trbRticle::trb_article
+---
+
+Introduction
+============
+The \trbcite{TRBGuide} has unique and somewhat arbitrary requirements
+for papers submitted for review and publication. While the initial submission is
+required to be in PDF format, submissions for publication in Transportation
+Research Record must be in Microsoft Office format. On top of this, the
+manuscripts must be line-numbered, captions are bolded and employ atypical
+punctuation, and the references must be numbered when cited and then printed in
+order.
+
+It is assumed that the readers of this document have some significant level of
+experience in \LaTeX and \verb1bibtex1. As use of literate programming becomes more
+widespread in engineering and planning, it is possible that this template may
+need to be made more robust.
+
+### History
+David Pritchard posted the original versions of this template in 2009 and
+updated it in 2011, soon after TRB began allowing PDF submissions. Gregory
+Macfarlane made significant adaptations to it in March 2012, allowing for Sweave
+integration and automatic word and table counts. Ross Wang added an automatic
+total word count and made some minor formatting modifications in July 2015.
+
+### Features
+The template has a number of features that enable quick and painless manuscript
+authoring.
+
+### Title Page
+The standard \LaTeX\ \verb1\maketitle1 command is not very versatile, so we have
+replaced it with a \verb1titlepage1 environment. This means that the writers
+will be required to manually enter spacings based on the number of contributors,
+but the current settings (12pt between authors, 36pt before, and 60pt after them)
+seems to work well. 
+
+Near the bottom of the title page, TRB requires a count of the manuscript's
+words, figures, and tables. This template creates these counts automatically.
+The figure and table counts are simply pulled from the \LaTeX\ counters using the
+\verb1totcount1 package. The word count feature is not as simple, as it
+utilizes a call to the system command \verb1texcount1. Thus to compile the
+document writers must enable \verb#\write18# in their \verb1pdflatex1 call.
+
+In the newest version of this template, we added the total count automatically. 
+The total count basically adds not only the word count, but also the equivalent
+count (250 words) for each figure and table.  This is implemented using a cusomized
+% command \totalwordcount.  Please see the original code for more information.
+
+### Page Layout
+The document has 1 inch margins as required, with the author's names in the left
+heading and the page number in the right. The authors heading will need to be
+edited by the writers; automating this from the title page command is not
+currently possible. Paragraphs leading sections and subsections are not
+indented, while all subsequent paragraphs in that section are. Section types are
+defined as outlined by the \trbcite{TRBGuide}
+
+The document is single-spaced in 12 point Times font. Times New Roman is a
+proprietary font and is therefore not available by installation in open-source
+software. While the differences between Times variants are negligible, Times New
+Roman itself can be used in Mac OSX by compiling under \verb1xelatex1.
+
+### Line Numbers
+Manuscript line numbering is implemented using the \verb1lineno1 package. There
+are options to change the font style and type, but the current settings work
+well. Note that the line numbers refresh each page, and that blank lines do not
+receive a number.  Line numbers and headers are not shown on the title page.
+
+
+Captions
+========
+Figure \ref{fig:trial} shows a Gumbel distribution as an example of captioning.
+As demonstrated, figure captions ought to be sentence capitalized, bolded, and
+can be somwhat longer than in other journals.
+
+Table captions are somewhat different, requiring initial capitals and are more of a
+title. An example of this is given in Table \ref{tab:versions}, showing the
+history of this template.
+
+\begin{figure}[t]
+  \centering
+\includegraphics{trb_template-gumbel}
+\caption{This is a random figure to test the counting functionality on the
+title page. It shows a Gumbel distribution with mode 0 and scale 1. The
+multinomial logit model assumes that the error terms are distributed identically
+and independently following this pattern.}
+	\label{fig:trial}
+\end{figure}
+
+\begin{table}[t]
+  \caption{A History of this Template}
+	\label{tab:versions}
+\begin{center}
+	\begin{tabular}{l l l l}
+Version & Date & Author & Contributions \\\hline
+1.0 & Sep 2009 & Pritchard & Initial work \\
+1.1 & Mar 2011 & Pritchard & Captions \\
+2.0 & Mar 2012 & Macfarlane& Automation, documentation\\
+2.1 & Jul 2015 & Wang      & More automation and formatting\\\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Bibliography
+============
+The TRB bibliography style is defined in the \verb1trb.bst1 file which should be
+in your document folder. A new command is specified, \verb1\trbcite{}1 which
+will print the authors and the number of the reference in the order in which it
+is supplied. The References section will be appended to the end of the document.
+
+It is very easy to add reference to papers programs written by
+\trbcite{Bierlaire2003} and \trbcite{Bierlaire2008} or to papers like those
+written by \trbcite{Garrow2009} and \trbcite{Koppelman2005}. You can even go
+back and refer to Biog\'eme by \trbcite{Bierlaire2008} a second time.
+
+Formatting of references has been modified to have no extra spacing between 
+any two bibliographic entries.
+
+
+To Do's
+=======
+There is still work to be done on this template. Currently, the word count
+feature includes text in the abstract. It would also be cleaner if cited authors
+could be separated from their works. This may be possible currently, using the
+the \verb1\citeauthor{}1 and \verb1\citenum{}1 commands that are stuck together
+into \verb1\trbcite1. 
+
+There may well be other important features in the template that we have not
+considered. Ideally, we would make a \verb1trb.sty1 style class that could be
+called and we would not have to expose the user to so much \TeX-ese. This could
+be forthcoming, but not for this TRB cycle. 
+
+Conclusion
+==========
+To make this document from source in a Unix-like OS, issue the following
+commands:  
+
+R CMD SWEAVE 'document.rnw'  
+pdflatex --shell-escape document.tex  
+bibtex document  
+pdflatex --shell-escape document.tex  
+pdflatex --shell-escape document.tex  
+
+The --shell-escape1 option is required to access the command line for the
+word count. Normally this feature is disabled because it is a route of entry for
+malicious software. Mr.Macfarlane promises that there is no such debilitating
+code in this document, and he encourages you to examine any scripts for
+suspicious code before permitting from accessing your system.
+
+For R-Studio users using Sweave and .Rnw files, you may enable shell escape 
+command in the Global Options > Sweave settings.  Moreover, if your computer does 
+not have a Perl interpreter you will need one, such as the ActivePerl, for the 
+wordcount to work properly.
+
+References {#references .unnumbered}
+==========
