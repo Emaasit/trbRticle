@@ -17,11 +17,11 @@
 #' }
 #'
 #' @export
-trb_article <- function(...,
-                             keep_tex = TRUE,
-                             md_extensions = c("-autolink_bare_uris")) {
-  inherit_pdf_document(...,
-                       template = find_resource("trb_article", "trb_template.tex"),
-                       keep_tex = keep_tex,
-                       md_extensions = md_extensions)
+trb_article <- function(..., keep_tex = TRUE) {
+
+  template <- find_resource("trb_article", "trb_template.tex")
+
+  base <- inherit_pdf_document(..., template = template, keep_tex = keep_tex)
+
+  base
 }

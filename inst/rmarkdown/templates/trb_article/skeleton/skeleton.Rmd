@@ -151,19 +151,19 @@ be forthcoming, but not for this TRB cycle.
 Conclusion
 ==========
 To make this document from source in a Unix-like OS, issue the following
-commands:  
-
-R CMD SWEAVE 'document.rnw'  
-pdflatex --shell-escape document.tex  
-bibtex document  
-pdflatex --shell-escape document.tex  
-pdflatex --shell-escape document.tex  
-
-The --shell-escape1 option is required to access the command line for the
+commands:
+\begin{verbatim}
+R CMD SWEAVE 'document.rnw'
+pdflatex --shell-escape document.tex
+bibtex document
+pdflatex --shell-escape document.tex
+pdflatex --shell-escape document.tex
+\end{verbatim}
+The \verb1--shell-escape1 option is required to access the command line for the
 word count. Normally this feature is disabled because it is a route of entry for
-malicious software. Mr.Macfarlane promises that there is no such debilitating
+malicious software. Mr.\ Macfarlane promises that there is no such debilitating
 code in this document, and he encourages you to examine any scripts for
-suspicious code before permitting from accessing your system.
+suspicious code before permitting \verb1pdflatex1 from accessing your system.
 
 For R-Studio users using Sweave and .Rnw files, you may enable shell escape 
 command in the Global Options > Sweave settings.  Moreover, if your computer does 
